@@ -17,10 +17,10 @@ export default {
 
       const user = new User(result)
       const savedUser = await user.save()
-      const accessToken = await JWT.signAccessToken(savedUser.id)
-      const refreshToken = await JWT.signRefreshToken(savedUser.id)
+      // const accessToken = await JWT.signAccessToken(savedUser.id)
+      // const refreshToken = await JWT.signRefreshToken(savedUser.id)
 
-      res.send({ accessToken, refreshToken })
+      res.send({ savedUser })
     } catch (error) {
       if (error.isJoi === true) error.status = 422
       next(error)
@@ -41,6 +41,8 @@ export default {
       const accessToken = await JWT.signAccessToken(user.id)
       const refreshToken = await JWT.signRefreshToken(user.id)
 
+      res.cookie('accessToken', accessToken, { httpOnly: true })
+      res.cookie('refreshToken', refreshToken, { httpOnly: true })
       res.send({ accessToken, refreshToken })
     } catch (error) {
       if (error.isJoi === true) return next(new createError.BadRequest('Invalid Username/Password'))
@@ -56,6 +58,9 @@ export default {
 
       const accessToken = await JWT.signAccessToken(userId)
       const refToken = await JWT.signRefreshToken(userId)
+
+      res.cookie('accessToken', accessToken, { httpOnly: true })
+      res.cookie('refreshToken', refToken, { httpOnly: true })
       res.send({ accessToken: accessToken, refreshToken: refToken })
     } catch (error) {
       next(error)

@@ -9,6 +9,6 @@ HomeRoutes.get('/', JWT.verifyAccessToken, async (req, res, next) => {
   res.send({
     name: Settings.ProjectName,
     version: Settings.ProjectVersion,
-    port: Config.server.port
+    port: Config.server.PORT
   })
 })

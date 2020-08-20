@@ -1,17 +1,18 @@
 import redis from 'redis'
-import Settings from '../../settings.json'
+import Config from '..'
 
 const client = redis.createClient({
-  port: Settings.RedisPort,
-  host: Settings.RedisHost
+  url: Config.Env.DataBase.REDIS_URI,
+  no_ready_check: true,
+  auth_pass: Config.Env.DataBase.REDIS_PASSWORD
 })
 
 client.on('connect', () => {
-  console.log('Client connected to redis...')
+  console.log('Redis Connected')
 })
 
 client.on('ready', () => {
-  console.log('Client connected to redis and ready to use...')
+  console.log('Redis Connected and ready to use')
 })
 
 client.on('error', (err) => {

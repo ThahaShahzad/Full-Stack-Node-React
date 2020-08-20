@@ -2,8 +2,8 @@ import mongoose from 'mongoose'
 import Config from '..'
 
 mongoose
-  .connect(Config.Env.DataBase.DB_URI, {
-    dbName: process.env.DB_NAME,
+  .connect(Config.Env.DataBase.MONGO_DB_URI, {
+    dbName: process.env.MONGO_DB_NAME,
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
